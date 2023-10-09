@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        // Step 3: Using News API in JavaScript
+
+        const apiKey = 'api_key';
+        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+
+        // Making a GET request to the News API
+        fetch(url)
+            .then(response => response.json())  // Parse JSON data from the response
+            .then(data => {
+                // Handle the data here
+                const headlinesList = document.createElement('ul'); // Create an <ul> element
+
+                // Iterate through the articles and create <li> elements with "Read More" links
+                data.articles.forEach(article => {
+                    const listItem = document.createElement('li'); // Create an <li> element for each article
+
+                    const headline = document.createElement('a'); // Create a link element for the headline
+
+                    listItem.textContent = article.title; // Set the text content of the link
+                    headline.textContent = 'Read More';
+                    headline.href = article.url; // Set the href attribute to the article's URL
+                    headline.target = '_blank'; // Open the link in a new tab
+                    headline.style.marginLeft = '10px'; // Add some spacing between the headline and "Read More"
+
+
+                    // Append the headline and "Read More" span to the <li> element
+                    listItem.appendChild(headline);
+                    // listItem.appendChild(readMore);
+                    // Append the <li> element to the <ul> element
+                    headlinesList.appendChild(listItem);
+                })
+
+                // Append the <ul> element to the body of the document
+                document.body.appendChild(headlinesList);
+
+            })
+            .catch(error => {
+                // Handle errors here
+                console.error('Error fetching data:', error);
+            });
+    </script>
+</body>
+
+</html>
